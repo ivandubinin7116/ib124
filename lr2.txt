@@ -69,4 +69,31 @@ group:tempgrp:rwx		#effective:r-x
 mask::r-x
 other::r-x
  
+Mask устанавливает эффективные максимальные права  доступа для всех пользователей и групп, пропиманных в ACL 
+Пользователи сохпаняют свои настройки ACL, но работают только с правами, определенными настройками mask
+
+Изминения  mask:student@alexander-VirtualBox:~/StickyBit$ setfacl -m u:tmp4:rwx ../StickyBit/
+
+Исключение пользователя или группы из ACL:
+student@alexander-VirtualBox:~/StickyBit$ setfacl -x u:tmp3 ./ (для пользователя)
+Сброс всех ACL
+student@alexander-VirtualBox:~/StickyBit$ setfacl -b tmp3 ./
+
+Установка наследования по умолчанию:
+student@alexander-VirtualBox:~/StickyBit$ setfacl -m d:u:tmp3:rwx ./
+
+student@alexander-VirtualBox:~/StickyBit$ getfacl ./
+# file: .
+# owner: student
+# group: student
+user::rwx
+group::rwx
+other::r-x
+default:user::rwx
+default:user:tmp3:rwx
+default:group::rwx
+default:mask::rwx
+default:other::r-x
+
+Пример применения по умолчанию 
 
