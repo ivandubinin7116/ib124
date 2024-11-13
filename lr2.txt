@@ -96,4 +96,42 @@ default:mask::rwx
 default:other::r-x
 
 Пример применения по умолчанию 
+student@alexander-VirtualBox:~/ACL$ getfacl PvtF/
+# file: PvtF/
+# owner: student
+# group: student
+user::rwx
+group::rwx
+other::r--
+default:user::rwx
+default:user:tmp:r-x
+default:user:tmp3:r--
+default:group::rwx
+default:mask::rwx
+default:other::r-x
+
+student@alexander-VirtualBox:~/ACL$ setfacl -m u:tmp4:r-x PvtF/
+student@alexander-VirtualBox:~/ACL$ su tmp3
+Пароль:
+tmp3@alexander-VirtualBox:/home/student/ACL$ cd PvtF/
+bash: cd: PvtF/: Отказано в доступе
+tmp3@alexander-VirtualBox:/home/student/ACL$ exit
+exit
+student@alexander-VirtualBox:~/ACL$ cd PvtF/
+student@alexander-VirtualBox:~/ACL/PvtF$ mkdir F1
+student@alexander-VirtualBox:~/ACL/PvtF$ touch f1
+student@alexander-VirtualBox:~/ACL/PvtF$ ls -l
+итого 8
+-rw-rw-r--+ 1 student student    0 ноя 13 11:35 f1
+drwxrwxr-x+ 2 student student 4096 ноя 13 11:35 F1
+student@alexander-VirtualBox:~/ACL/PvtF$ getfacl F1
+# file: F1
+# owner: student
+# group: student
+user::rwx
+user:tmp:r-x
+user:tmp3:r--
+group::rwx
+mask::rwx
+other::r-x
 
